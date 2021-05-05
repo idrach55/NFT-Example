@@ -1,0 +1,25 @@
+contract.address
+response
+const response = await contract.mintNFT("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","","#FFFFFF")
+await contract.ownerOf(0)
+response
+const response = await contract.mintNFT("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","","#FFFFFF")
+await contract.ownerOf(0)
+contract
+await contract.deployed()
+const contract = await MyNFT.deploy()
+const MyNFT = await ethers.getContractFactory("MyNFT")
+MyNFT
+contract
+provider
+ethers
+ethers.accounts
+provider.accounts
+provider.accounts[0]
+await provider.getBalance("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266")
+provider
+let provider = ethers.getDefaultProvider();
+.exit
+const contract = await MyNFT.deploy()
+const MyNFT = await ethers.getContractFactory("MyNFT")
+ethers.getContractFactory("MyNFT")
