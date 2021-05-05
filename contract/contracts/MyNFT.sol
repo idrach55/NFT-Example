@@ -11,10 +11,10 @@ contract MyNFT is ERC721, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    string[] private _colors;
+    mapping (uint256 => string) private _colors;
     mapping (string => bool) private _colorExists;
 
-    constructor() public ERC721("MyNFT", "NFT") {}
+    constructor() ERC721("MyNFT", "NFT") {}
 
     function mintNFT(address recipient, string memory tokenURI, string memory color)
         public onlyOwner
@@ -26,7 +26,8 @@ contract MyNFT is ERC721, Ownable {
         uint256 newItemId = _tokenIds.current();
         _mint(recipient, newItemId);
         _setTokenURI(newItemId, tokenURI);
-        _colors.push(color);
+        _colors[newItemId] = color;
+        _colorExists[color] = true;
 
         return newItemId;
     }

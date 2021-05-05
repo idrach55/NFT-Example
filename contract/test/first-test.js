@@ -1,4 +1,6 @@
-const { expect } = require("chai");
+const chai = require('chai')
+const expect = chai.expect
+chai.use(require('chai-as-promised'))
 
 let MyNFT;
 let contract;
@@ -22,16 +24,24 @@ beforeEach(async function () {
 */
 
 describe("MyNFT", function() {
-    it("deploys successfully", async function() {
+    it("deploys successfully", async () => {
         MyNFT = await ethers.getContractFactory("MyNFT");
         contract = await MyNFT.deploy();
 
         await contract.deployed();
         expect(await contract.symbol()).to.equal("NFT");
     });
-    it("mints successfully", async function() {
+    it("mints successfully", async () => {
         const response = await contract.mintNFT("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266", "", "#FFFFFF");
-        expect(await contract.ownerOf(0)).to.equal("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
-        expect(await contract.colorOf(0)).to.equal("#FFFFFF");
+        
+        const supply = await contract.totalSupply()
+        expect(String(supply)).to.equal("1");
+
+        const owner = await contract.ownerOf(1)
+        expect(String(owner).toLowerCase()).to.equal("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+        expect(await contract.colorOf(1)).to.equal("#FFFFFF");
+    })
+    it("keeps colors unique", async () => {
+        await expect(contract.mintNFT("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266", "", "#FFFFFF")).to.be.rejectedWith(Error);
     })
 });

@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/isaacdrachman/GitHub/Hyperworks/contract/contracts/MyNFT.sol": {
-      "lastModificationDate": 1620248644188,
-      "contentHash": "6b697b674d0759cefa5544cefca741d9",
+      "lastModificationDate": 1620250990321,
+      "contentHash": "b9e61fa50ff0e3f9fb9003ce236ad308",
       "sourceName": "contracts/MyNFT.sol",
       "solcConfig": {
         "version": "0.7.3",
