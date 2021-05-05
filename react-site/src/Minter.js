@@ -7,15 +7,13 @@ const Minter = (props) => {
     const [walletAddress, setWallet] = useState("");
     const [statusMsg, setStatusMsg] = useState("");
 
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [url, setURL] = useState("");
+    const [color, setColor] = useState("");
 
 
     useEffect(async () => {
         if (window.ethereum) {
             try {
-                const accounts = await window.ethereum.request({ method: "eth_accounts" })
+                const accounts = await window.ethereum.request({method: "eth_accounts"})
                 if (accounts.length) {
                     setConnectedStatus(true);
                     setWallet(accounts[0]);
@@ -31,17 +29,21 @@ const Minter = (props) => {
     });
 
     const connectWalletPressed = async () => {
-        const walletResponse = await connectWallet(onAccountChanged, onDisconnect);
+        if (isConnected) return;
+
+        const walletResponse = await connectWallet();
         setConnectedStatus(walletResponse.connectedStatus);
         setStatusMsg(walletResponse.statusMsg);
         if (isConnected) {
             setWallet(walletAddress);
+
+            // TOOD: The below isn't working.
+            window.ethereum.on("accountsChanged", (accounts) => {
+                console.log("Account change!");
+            });
+            window.ethereum.on("disconnect", onDisconnect);
         }
     };
-
-    const onAccountChanged = async (accounts) => {
-        console.log("Account change: "+String(accounts));
-    }
 
     const onDisconnect = async (error) => {
         setConnectedStatus(false);
@@ -78,26 +80,14 @@ const Minter = (props) => {
         <br></br>
         <h1 id="title">Hyperworks NFT Minter</h1>
         <p>
-        Simply add your asset's link, name, and description, then press "Mint."
+        Simply add your asset's color, then press "Mint."
         </p>
         <form>
-            <h2>Link to asset: </h2>
+            <h2>Color: </h2>
             <input
                 type="text"
-                placeholder="e.g. https://gateway.pinata.cloud/ipfs/<hash>"
-                onChange={(event) => setURL(event.target.value)}
-            />
-            <h2>Name: </h2>
-            <input
-                type="text"
-                placeholder="e.g. My first NFT!"
-                onChange={(event) => setName(event.target.value)}
-            />
-            <h2>Description: </h2>
-            <input
-                type="text"
-                placeholder="e.g. Even cooler than cryptokitties ;)"
-                onChange={(event) => setDescription(event.target.value)}
+                placeholder="e.g. #FFAA00"
+                onChange={(event) => setColor(event.target.value)}
             />
         </form>
         <button id="mintButton" onClick={onMintPressed}>

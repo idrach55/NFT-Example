@@ -38,7 +38,7 @@ describe("MyNFT", function() {
         expect(String(supply)).to.equal("1");
 
         const owner = await contract.ownerOf(1)
-        expect(String(owner).toLowerCase()).to.equal("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+        expect(owner.toLowerCase()).to.equal("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
         expect(await contract.colorOf(1)).to.equal("#FFFFFF");
     })
     it("keeps colors unique", async () => {
