@@ -1,21 +1,16 @@
-
+import './App.css';
 
 const App = () => {
     return (
-    <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
+    <div className="app">
+        <nav className="app-nav">
+            <div className="app-nav-header"><h3>Hyperworks</h3></div>
+            <div className="app-nav-connect"><button className="button"><h3>Connect to Metamask</h3></button></div>
+        </nav>
+        <header className="app-header">
             <p>
             Edit <code>src/App.js</code> and save to reload.
             </p>
-            <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            >
-            Learn React
-            </a>
         </header>
     </div>
     );
