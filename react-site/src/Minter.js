@@ -1,12 +1,12 @@
 import './App.css';
 import { useEffect, useState } from "react";
-import { connectWallet } from "./util/interact.js";
+import { connectWallet, mintNFT } from "./util/interact.js";
 
 const Minter = (props) => {
     const [isConnected, setConnectedStatus] = useState(false);
     const [walletAddress, setWallet] = useState("");
-    const [statusMsg, setStatusMsg] = useState("");
-
+    const [status, setStatus] = useState("");
+    const [txLink, setTxLink] = useState("");
     const [color, setColor] = useState("");
 
 
@@ -33,7 +33,7 @@ const Minter = (props) => {
 
         const walletResponse = await connectWallet();
         setConnectedStatus(walletResponse.connectedStatus);
-        setStatusMsg(walletResponse.statusMsg);
+        setStatus(walletResponse.status);
         if (isConnected) {
             setWallet(walletAddress);
 
@@ -41,27 +41,17 @@ const Minter = (props) => {
             window.ethereum.on("accountsChanged", (accounts) => {
                 console.log("Account change!");
             });
-            window.ethereum.on("disconnect", onDisconnect);
         }
     };
 
-    const onDisconnect = async (error) => {
-        setConnectedStatus(false);
-        setStatusMsg("(!) Connect to Metamask using the top right button.");
-        setWallet("");
-    }
-
     const onMintPressed = async () => {
-        /*
-        const { success, status } = await mintNFT(url, name, description);
-        setStatus(status);
-        setConnectedStatus(success)
+        const { success, status } = await mintNFT(color);
         if (success) {
-            setName("");
-            setDescription("");
-            setURL("");
+            setColor("");
+            setTxLink(status);
+        } else {
+            setStatus(status);
         }
-        */
     };
 
     return (
@@ -93,9 +83,16 @@ const Minter = (props) => {
         <button id="mintButton" onClick={onMintPressed}>
         Mint NFT
         </button>
-        <p id="statusMsg" style={{ color: "red" }}>
-        {statusMsg}
+        <p id="status" style={{ color: "red" }}>
+        {status}
         </p>
+        {txLink != "" ? (
+        <p>
+        Check out your transaction on <a href={"https://ropsten.etherscan.io/tx/" + txLink} target="_blank">Etherscan</a>
+        </p>
+        ) : (
+        <p></p>
+        )}
     </div>
     );
 };
