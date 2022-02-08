@@ -1,9 +1,9 @@
 # NFT-Example
-Site, smart contract, and other code for a small NFT project
+My first foray into web3: very small NFT project consisting of react front-end and ethereum smart contract.
 
 ## react-site
 Project built from create-react-app for front-end site.
-* wired up to metamask in client's browser
+* wired up to metamask in client's browser and Alchemy API
 * mint example contract
 
 ## contract
